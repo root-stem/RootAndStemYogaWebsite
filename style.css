@@ -1,0 +1,245 @@
+/* Root & Stem Yoga
+   Palette taken from the photos: morning mist, bark, moss, the teal mat, maple gold. */
+
+@font-face {
+  font-family: "Chorus";
+  src: url("fonts/chorus.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("fonts/instrument-sans.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("fonts/instrument-sans-italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("fonts/instrument-sans-bold.woff") format("woff");
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --mist: #eef1ec;
+  --birch: #fafbf8;
+  --bark: #2e2620;
+  --bark-soft: #5a5048;
+  --moss: #55613f;
+  --teal: #1e5b57;
+  --teal-dark: #154441;
+  --maple: #c08a2b;
+
+  --script: "Chorus", "Zapf Chancery", "URW Chancery L", cursive;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+
+  --measure: 36rem;
+  --gutter: clamp(1rem, 5vw, 3rem);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--mist);
+  color: var(--bark);
+  font-family: var(--sans);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3 {
+  font-family: var(--script);
+  font-weight: normal;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+}
+h2 { font-size: clamp(2.6rem, 6vw, 3.75rem); color: var(--moss); }
+h3 { font-size: 2rem; }
+
+p { margin: 0 0 1em; }
+
+a { color: var(--teal); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--teal-dark); text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--maple); outline-offset: 3px; border-radius: 2px; }
+
+.skip {
+  position: absolute; left: 1rem; top: -4rem; z-index: 10;
+  background: var(--birch); padding: 0.5rem 1rem;
+}
+.skip:focus { top: 1rem; }
+
+.button {
+  display: inline-block;
+  background: var(--teal);
+  color: var(--birch);
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.button:hover { background: var(--teal-dark); color: var(--birch); }
+
+/* ---------- Hero: the forest, with fog drifting across ---------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--mist) url("images/forest-fog.jpg") center 40% / cover no-repeat;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__fog {
+  position: absolute;
+  inset: auto 0 6% 0;
+  height: 55%;
+  background: url("images/fog-layer.png") 0 50% / auto 100% repeat-x;
+  animation: drift 120s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+@keyframes drift { to { background-position: -3200px 50%; } }
+@media (prefers-reduced-motion: reduce) { .hero__fog { animation: none; } }
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem var(--gutter) 2.5rem;
+  background: linear-gradient(rgba(250, 251, 248, 0.8), rgba(250, 251, 248, 0));
+}
+.nav a { color: var(--bark); text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+.nav__home { font-family: var(--script); font-size: 1.75rem; line-height: 1; }
+.nav ul { display: flex; gap: clamp(1rem, 3vw, 2rem); list-style: none; margin: 0; padding: 0; font-size: 1rem; }
+
+.hero__text {
+  align-self: center;
+  text-align: center;
+  padding: 0 var(--gutter) 12vh;
+}
+.hero h1 {
+  font-size: clamp(3.5rem, 13vw, 10rem);
+  color: var(--birch);
+  text-shadow: 0 0 0.25em rgba(46, 38, 32, 0.55), 0 0 0.05em rgba(46, 38, 32, 0.6);
+  margin-bottom: 0.15em;
+}
+.hero__tagline {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  color: var(--bark);
+  background: rgba(250, 251, 248, 0.7);
+  display: inline-block;
+  padding: 0.3em 0.9em;
+  border-radius: 1em;
+  max-width: 36rem;
+  margin-bottom: 1.75rem;
+}
+.hero__actions { margin: 0; }
+
+/* ---------- Sections ---------- */
+
+main > section {
+  padding: clamp(4rem, 10vw, 7rem) var(--gutter);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.lede { font-size: 1.35rem; line-height: 1.5; }
+
+/* About: text left, photo right; on phones the photo follows the text */
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, var(--measure)) minmax(0, 24rem);
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+.about__photo { margin: 0; }
+.about__photo img {
+  border-radius: 46% 46% 1.5rem 1.5rem / 30% 30% 1.5rem 1.5rem; /* arch, like a window onto the woods */
+}
+
+/* Videos sit on a band of birch so the thumbnail stands out */
+.videos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 1.5rem clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.videos h2 { grid-column: 1 / -1; }
+#videos { position: relative; }
+#videos::before {
+  content: "";
+  position: absolute; inset: 0 calc(50% - 50vw);
+  background: var(--birch);
+  z-index: -1;
+}
+.video { position: relative; display: block; border-radius: 1rem; overflow: hidden; }
+.video img { transition: transform 0.4s ease; }
+.video:hover img { transform: scale(1.02); }
+.video__play {
+  position: absolute; left: 50%; top: 50%;
+  width: 4.5rem; height: 4.5rem; margin: -2.25rem 0 0 -2.25rem;
+  border-radius: 50%;
+  background: rgba(250, 251, 248, 0.85);
+}
+.video__play::after {
+  content: "";
+  position: absolute; left: 1.75rem; top: 1.35rem;
+  border-style: solid; border-width: 0.9rem 0 0.9rem 1.4rem;
+  border-color: transparent transparent transparent var(--teal);
+}
+.video__info h3 { color: var(--bark); }
+.video__info p { color: var(--bark-soft); max-width: var(--measure); }
+@media (prefers-reduced-motion: reduce) { .video img { transition: none; } }
+
+/* Classes: a simple list, not cards */
+.classes > p { max-width: var(--measure); }
+.offerings { margin: 2rem 0 0; display: grid; gap: 1.75rem; max-width: 44rem; }
+.offerings div { border-left: 3px solid var(--maple); padding-left: 1.25rem; }
+.offerings dt { font-weight: 700; font-size: 1.2rem; }
+.offerings dd { margin: 0.25rem 0 0; color: var(--bark-soft); }
+
+/* Contact */
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+main > .contact { padding-top: 0; }
+.contact__photo { border-radius: 1.5rem; }
+.contact__text p { max-width: 28rem; }
+
+.footer {
+  display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  padding: 3rem var(--gutter) 4rem;
+  font-size: 0.95rem; color: var(--bark-soft);
+}
+.footer img { border-radius: 50%; }
+.footer p { margin: 0; }
+
+/* ---------- Phones ---------- */
+@media (max-width: 760px) {
+  .nav { flex-direction: column; gap: 0.5rem; }
+  .about, .videos, .contact { grid-template-columns: 1fr; }
+  .about__photo { max-width: 22rem; }
+  .contact__photo { order: 2; }
+}
